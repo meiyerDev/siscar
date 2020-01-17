@@ -19,11 +19,11 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::post('send/license', 'StudentController@sendLicense')->name('send.license');
-Route::get('buscar/estudiante', 'StudentController@soliStudent');
+Route::post('send/license', 'LicenseController@sendLicense')->name('send.license');
+Route::get('solicitar/carnet', 'LicenseController@soliStudent');
+Route::get('estudiante/search/{id}', 'LicenseController@searchStudent');
 Route::get('estudiante/mostrar/{id}', 'StudentController@edit');
 Route::get('estudiante/foto/{id}', 'StudentController@searchPhoto')->name('estudiante.searchPhoto');
-Route::get('estudiante/search/{id}', 'StudentController@searchStudent');
 Route::resource('estudiante', 'StudentController');
 
 

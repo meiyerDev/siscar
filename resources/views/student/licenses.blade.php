@@ -24,9 +24,8 @@
   </style>
 </head>
 <body class="d-flex flex-column">
-  <a href="{{ route('home') }}" class="ml-1 mt-1 col-2 text-dark">&#8592; Inicio</a>
   <div id="page-content">
-    <div class="container text-center">
+    <div class="container text-center mt-5">
       <div class="row justify-content-center">
         <div class="col-md-7">
           <form action="{{ route('send.license') }}" method="POST" name="solicitarCarnet">

@@ -12,6 +12,7 @@ class UsersSeeder extends Seeder
      */
     public function run()
     {
+        DB::table('users')->delete();
         User::create([
         	'name'			=>	'Loriana Machado',
         	'email'			=>	'loriana@gmail.com',

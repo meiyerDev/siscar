@@ -10,4 +10,9 @@ class StudentCareer extends Model
 		'student_id',
 		'career_id',
     ];
+
+    public function students()
+    {
+    	return $this->hasMany(App\Student::class);
+    }
 }

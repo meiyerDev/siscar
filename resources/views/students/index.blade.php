@@ -1,62 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<title>Document</title>
-	<link href="{{ asset('asset/css/bootstrap.min.css') }}" rel="stylesheet">
-	<style>
-		/* Sticky Footer Classes */
-		html,
-		body {
-			height: 100%;
-		}
-		#page-content {
-			flex: 1 0 auto;
-		}
-		#sticky-footer {
-			flex-shrink: none;
-		}
+@extends('layouts.templatito')
+@section('title') LISTADO @endsection
 
-		/* Other Classes for Page Styling */
-		body {
-			background:  #d7dbdd;
-			background: linear-gradient(to right, #e5e7e9,  #f8f9f9);
-		}
-	</style>
-</head>
-<body class="d-flex flex-column">
-		<nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-primary shadow">
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-		  <a class="navbar-brand mb-0 h1" href="{{ route('home') }}">SisCar</a>
-    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-      <li class="nav-item active">
-        <a class="nav-link" href="{{ route('home') }}">Home <span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link text-white" href="{{ route('estudiante.index') }}">Listado de Estudiantes</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link text-white" href="{{ route('estudiante.create') }}">Nuevo Estudiante</a>
-      </li>
-    </ul>
-    <div class="nav-item dropdown">
-      <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        Dropdown link
-      </a>
-      <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-        <a class="dropdown-item" href="#">Action</a>
-        <a class="dropdown-item" href="#">Another action</a>
-        <a class="dropdown-item" href="#">Something else here</a>
-      </div>
-    </div>
-  </div>
-</nav>
-	<div id="page-content">
-		<div class="container text-center mt-5">
-			<div class="row justify-content-center">
+@section('body')
 				<div class="col-md-12">
 					<div class="card shadow">
 						<div class="card-header">
@@ -89,7 +34,7 @@
 												<td>{{ $student->identity }}</td>
 												<td>{{ $student->first_name }}</td>
 												<td>{{ $student->last_name }}</td>
-												<td>Prueba</td>
+												<td>{{ $student->careers->first()->name }}</td>
 												<td>
 													<button type="button" class="btn btn-sm btn-info btn-modal-foto" data-info="{{ $student->identity }}"><i class="far fa-eye"></i> Foto</button>
 													<button type="button" class="btn btn-sm btn-info btn-modal-carnet" data-info="{{ $student->identity }}"><i class="far fa-eye"></i> carnet</button>
@@ -105,20 +50,75 @@
 
 					</div>
 				</div>
-			</div>
-		</div>
-	</div>
-	<footer id="sticky-footer" class="py-4 bg-dark text-white-50">
-		<div class="container text-center">
-			<small>Copyright &copy; Loriana Machado</small>
-		</div>
-	</footer>
+					<!--Modal: View Photo Student-->
+				<div class="modal fade" id="modalLRFormDemo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+				  aria-hidden="true">
+				  <div class="modal-dialog" role="document">
+				    <div class="modal-content">
+				      <div class="modal-header">
+				        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+				        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				          <span aria-hidden="true">&times;</span>
+				        </button>
+				      </div>
+				      <div class="modal-body">
+				        <img id="imgModalStudent" class="img-responsive mx-auto d-block w-75" alt="">
+				      </div>
+				      <div class="modal-footer">
+				        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				      </div>
+				    </div>
+				  </div>
+				</div>
+				<!--Modal: View Photo Student-->
 
-</body>
-<!-- JQuery -->
-<script type="text/javascript" src="{{ asset('asset/js/jquery-3.4.1.min.js') }}"></script>
-<!-- Bootstrap tooltips -->
-<script type="text/javascript" src="{{ asset('asset/js/popper.min.js') }}"></script>
-<!-- Bootstrap core JavaScript -->
-<script type="text/javascript" src="{{ asset('asset/js/bootstrap.min.js') }}"></script>
-</html>
+@endsection
+				
+@section('my_script')
+	<script>
+		$(document).ready(function() {
+			$('.btn-modal-foto').click(function() {
+				urlAjax = `/estudiante/foto/${$(this).data('info')}`;
+				$.ajax({
+					url: urlAjax,
+					method: 'GET'
+				})
+				.done(function(respuesta) {
+					// console.log();
+					$('#imgModalStudent')
+						.attr('src',respuesta.photo)
+						.parent()
+						.parent()
+						.children('.modal-header')
+						.children('h5')
+						.html(`${respuesta.first_name} ${respuesta.last_name}`);
+					$('#modalLRFormDemo').modal('toggle');
+				})
+				.fail(function(error) {
+					console.log(error);
+				});
+			});
+			$('.btn-modal-carnet').click(function() {
+				urlAjax = `/estudiante/${$(this).data('info')}/edit`;
+				$.ajax({
+					url: urlAjax,
+					method: 'GET'
+				})
+				.done(function(respuesta) {
+					// console.log();
+					$('#imgModalStudent')
+						.attr('src',respuesta.photo_license_2)
+						.parent()
+						.parent()
+						.children('.modal-header')
+						.children('h5')
+						.html(`${respuesta.first_name} ${respuesta.last_name}`);
+					$('#modalLRFormDemo').modal('toggle');
+				})
+				.fail(function(error) {
+					console.log(error);
+				});
+			});
+		});
+	</script>
+@endsection

@@ -17,4 +17,10 @@ class Student extends Model
         'phone',
         'email',
     ];
+
+    public function careers()
+    {
+    	return $this->belongsToMany(Career::class,'student_career');
+    }
+
 }

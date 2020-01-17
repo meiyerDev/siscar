@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\{Student,Career,License};
+use App\Binnacle;
 use App\Mail\LicenseCallReceived;
 use QrCode;
 
@@ -32,7 +33,8 @@ class StudentController extends Controller
      */
     public function create()
     {
-        return view('student.create');
+        $careers = Career::all();
+        return view('students.create',compact('careers'));
     }
 
     /**
@@ -54,6 +56,9 @@ class StudentController extends Controller
             'canvas'        =>  'required'
         ])->validate();
 
+        $code_career = explode('-', $request->career_id);
+        $career = Career::where('code',$code_career)->first();
+
         $student = Student::create([
             'identity'      =>  $request->identity,
             'first_name'    =>  $request->first_name,
@@ -65,8 +70,14 @@ class StudentController extends Controller
             'photo_license' =>  $request->photoAvatarBlob,
             'photo_license_2'=>  $request->canvas,
         ]);        
-
-        // $student->careers()->attach($request->career_id);
+        
+        $student->careers()->attach($career->id);
+        
+        $binnacle = Binnacle::create([
+            'action' => 'Registro Exitoso!',
+            'identity' => $request->identity,
+            'user_id' => \Auth::user()->id,
+        ]);
 
         return $request->file('photoAvatarBlob');
     }
@@ -125,47 +136,5 @@ class StudentController extends Controller
     }
     // METODO PARA BUSCAR LA FOTO DE ESTUDIANTE
 
-    // METODO PARA BUSCAR EL ESTUDIANTE
-    public function searchStudent($id)
-    {
-        $student = Student::select(['first_name','last_name','identity'])->where('identity',$id)->first();
-        return $student;
-    }
-    // METODO PARA BUSCAR EL ESTUDIANTE
-
-    // METODO PARA BUSCAR CREAR EL QRCODE
-    public function generateStudentQrCode($url)
-    {
-        // return QrCode::encoding('UTF-8')->size(200)->generate($url);
-    }
-    // METODO PARA BUSCAR CREAR EL QRCODE
-
-    // METODO PARA ENVIAR EL CARNET
-    public function sendLicense(Request $request)
-    {
-        $validator = Validator::make($request->all(), [
-            'identity'  =>  'required',
-            // 'license'   =>  'required'
-        ])->validate();
-
-        $student = Student::where('identity',$request->identity)->first();
-        $url = str_replace('send/license', 'estudiante/search/'.$request->identity, $request->url());
-
-        $pdf = \PDF::loadView('student.pdfLicense', compact('student','url'));
-
-        $receiver = $student->email;
-
-        // return $receiver;
-
-        \Mail::to($receiver)->send(new LicenseCallReceived($request->student,$pdf));
-        return response('¡Enviado!', $status = 200);        
-    }
-    // METODO PARA ENVIAR EL CARNET
-
-    // METODO PARA SOLICITAR EL CARNET
-    public function soliStudent(Request $request)
-    {
-        return view('student.licenses');
-    }
-    // METODO PARA SOLICITAR EL CARNET
+    
 }

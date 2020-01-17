@@ -12,10 +12,13 @@
         <!-- Styles -->
         <style>
             html, body {
-                background-color: #fff;
-                color: #636b6f;
+                background: #007bff;
+                  background: -webkit-linear-gradient(left, #0062E6, #33AEFF);
+                  background: -o-linear-gradient(left, #0062E6, #33AEFF);
+                  background: linear-gradient(to right, #0062E6, #33AEFF);
+                color: #fff;
                 font-family: 'Nunito', sans-serif;
-                font-weight: 200;
+                font-weight: 500;
                 height: 100vh;
                 margin: 0;
             }
@@ -45,11 +48,11 @@
             }
 
             .title {
-                font-size: 84px;
+                font-size: 110px;
             }
 
             .links > a {
-                color: #636b6f;
+                color: #fff;
                 padding: 0 25px;
                 font-size: 13px;
                 font-weight: 600;
@@ -72,9 +75,9 @@
                     @else
                         <a href="{{ route('login') }}">Login</a>
 
-                        @if (Route::has('register'))
+                       {{--  @if (Route::has('register'))
                             <a href="{{ route('register') }}">Register</a>
-                        @endif
+                        @endif --}}
                     @endauth
                 </div>
             @endif
@@ -83,14 +86,6 @@
                 <div class="title m-b-md">
                     SisCar
                 </div>
-                <!-- <div class="links">
-                    <a href="https://laravel.com/docs">Documentation</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://nova.laravel.com">Nova</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
-                </div> -->
             </div>
         </div>
     </body>
