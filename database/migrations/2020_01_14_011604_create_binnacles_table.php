@@ -15,10 +15,13 @@ class CreateBinnaclesTable extends Migration
     {
         Schema::create('binnacles', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('user_id')->unsigned()->nullable();
+            $table->integer('user_id')->unsigned()->nullable();
+            $table->integer('type');
             $table->string('identity')->nullable();
             $table->string('action');
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

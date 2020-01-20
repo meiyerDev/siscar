@@ -21,10 +21,23 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::post('send/license', 'LicenseController@sendLicense')->name('send.license');
 Route::get('solicitar/carnet', 'LicenseController@soliStudent');
+
+// Estudiante
 Route::get('estudiante/search/{id}', 'LicenseController@searchStudent');
 Route::get('estudiante/mostrar/{id}', 'StudentController@edit');
 Route::get('estudiante/foto/{id}', 'StudentController@searchPhoto')->name('estudiante.searchPhoto');
+Route::get('estudiante/editar/{id}', 'StudentController@searchStudentInfo')->name('estudiante.searchInfo');
 Route::resource('estudiante', 'StudentController');
+// Estudiante
+
+// Usuarios
+Route::get('admin/bitacora','BitacoraController@index')->name('usuario.bitacora');
+Route::get('admin/usuarios','UserController@index')->name('usuario.all');
+Route::post('admin/usuarios/nuevo','UserController@store')->name('usuario.new');
+Route::get('admin/usuarios/editar/{id}','UserController@edit')->name('usuario.edit');
+Route::put('admin/usuarios/actualizar/{id}','UserController@edit')->name('usuario.actualizar');
+Route::delete('admin/usuarios/eliminar/{id}','UserController@destroy')->name('usuario.destroy');
+// Usuarios
 
 
 // ABRIR VENTANA EMERGENTE PARA TOMAR LA FOTO

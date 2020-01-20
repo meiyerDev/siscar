@@ -30,6 +30,16 @@ class User extends Authenticatable
 
     public function binnacles()
     {
-        return $this->hasMany(App\Binnacle::class);
+        return $this->hasMany(\App\Binnacle::class);
+    }
+
+    public function roles()
+    {
+        return $this->belongsToMany('App\Models\Role');
+    }
+
+    public function is_admin()
+    {
+        return (count($this->roles()->where('type','root')->get()) > 0)?true:false;
     }
 }

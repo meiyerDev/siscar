@@ -41,4 +41,9 @@ class User extends Eloquent
 		'password',
 		'remember_token'
 	];
+
+	public function roles()
+	{
+		return $this->belongsToMany('App\Models\Role');
+	}
 }

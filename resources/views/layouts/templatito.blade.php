@@ -3,9 +3,9 @@
 <head>
 	<meta charset="UTF-8">
 	<title>@yield('title')</title>
-	<link href="{{ asset('asset/css/bootstrap.min.css') }}" rel="stylesheet">
-	<link href="{{ asset('assets/vendors/custom/vendors/fontawesome5/css/all.min.css') }}" rel="stylesheet" type="text/css" />
-	<link href="{{ asset('assets/vendors/general/sweetalert2/dist/sweetalert2.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
+	<link href="{{ asset('fontawesome/css/all.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ asset('sweetalert2/dist/sweetalert2.css') }}" rel="stylesheet" type="text/css" />
 	<style>
 		/* Sticky Footer Classes */
 		html,
@@ -48,10 +48,18 @@
 				<li class="nav-item">
 					<a class="nav-link text-white" href="{{ route('estudiante.create') }}">Nuevo Estudiante</a>
 				</li>
+				@if(\Auth::user()->is_admin())
+				<li class="nav-item">
+					<a class="nav-link text-white" href="{{ route('usuario.bitacora') }}">Bitácora</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link text-white" href="{{ route('usuario.all') }}">Gestión de Usuarios</a>
+				</li>
+				@endif
 			</ul>
 			<div class="nav-item dropdown">
 				<a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-					Usuario
+					{{ \Auth::user()->name }}
 				</a>
 				<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
 					<a class="dropdown-item" href="{{ route('logout') }}"
@@ -81,12 +89,12 @@
 
 </body>
 <!-- JQuery -->
-<script type="text/javascript" src="{{ asset('asset/js/jquery-3.4.1.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/jquery-3.4.1.min.js') }}"></script>
 <!-- Bootstrap tooltips -->
-<script type="text/javascript" src="{{ asset('asset/js/popper.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/popper.min.js') }}"></script>
 <!-- Bootstrap core JavaScript -->
-<script type="text/javascript" src="{{ asset('asset/js/bootstrap.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/bootstrap.min.js') }}"></script>
 {{-- OTROS RECURSOS --}}
-<script src="{{ asset('assets/vendors/general/sweetalert2/dist/sweetalert2.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('sweetalert2/dist/sweetalert2.min.js') }}" type="text/javascript"></script>
 @yield('my_script')
 </html>

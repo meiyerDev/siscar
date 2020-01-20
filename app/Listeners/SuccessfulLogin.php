@@ -30,6 +30,7 @@ class SuccessfulLogin
         $event->user->last_login = new \DateTime;
         
         $binnacle = Binnacle::create([
+            'type' => 1,
             'action' => 'Ultimo Login',
             'user_id' => $event->user->id
         ]);

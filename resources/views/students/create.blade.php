@@ -16,7 +16,7 @@
 								<div class="col-lg-2 form-group-sub">
 									<img src="{{ asset('img/recursos/avatar.png') }}" class="img-fluid rounded float-left" alt="Imagen de Perfil" id="avatar">
 									<button type="button" id="fotoClick" class="btn btn-sm btn-outline-warning col-sm-12">
-										<i class="fa fa-pen"></i> Tomar Foto
+										<i class="fa fa-camera"></i> Tomar Foto
 									</button>
 								</div>
 								<div class="col-lg-5 form-group-sub">
@@ -57,7 +57,7 @@
 							<div class="row">
 								<div class="col-lg-12">
 									<button type="button" class="btn btn-outline-primary shadow" id="formSubmit">Guardar</button>
-									<button type="reset" class="btn btn-outline-secondary shadow">Cancel</button>
+									<button type="reset" class="btn btn-outline-secondary shadow">Cancelar</button>
 								</div>
 							</div>
 						</form>

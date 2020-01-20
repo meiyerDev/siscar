@@ -1,8 +1,8 @@
 <html>
 <head>
   <title>Carnet</title>
-  <link href="{{ asset('asset/css/bootstrap.min.css') }}" rel="stylesheet">
-  <link href="{{ asset('assets/vendors/general/sweetalert2/dist/sweetalert2.css') }}" rel="stylesheet" type="text/css" />
+  <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
+  <link href="{{ asset('sweetalert2/dist/sweetalert2.css') }}" rel="stylesheet" type="text/css" />
   <style>
     /* Sticky Footer Classes */
     html,
@@ -49,12 +49,12 @@
 </body>
 
 <!-- JQuery -->
-<script type="text/javascript" src="{{ asset('asset/js/jquery-3.4.1.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/jquery-3.4.1.min.js') }}"></script>
 <!-- Bootstrap tooltips -->
-<script type="text/javascript" src="{{ asset('asset/js/popper.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/popper.min.js') }}"></script>
 <!-- Bootstrap core JavaScript -->
-<script type="text/javascript" src="{{ asset('asset/js/bootstrap.min.js') }}"></script>
-<script src="{{ asset('assets/vendors/general/sweetalert2/dist/sweetalert2.min.js') }}" type="text/javascript"></script>
+<script type="text/javascript" src="{{ asset('js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('sweetalert2/dist/sweetalert2.min.js') }}" type="text/javascript"></script>
 <script>
   $(document).ready(()=>{
     $('form').submit(e=>{

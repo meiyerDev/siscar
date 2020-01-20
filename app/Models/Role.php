@@ -20,5 +20,12 @@ use Reliese\Database\Eloquent\Model as Eloquent;
  */
 class Role extends Eloquent
 {
+	protected $fillable = [
+		'name','type'
+	];
 
+	public function users()
+	{
+		return $this->hasMany('App\Models\User');
+	}
 }

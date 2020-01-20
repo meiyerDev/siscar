@@ -74,6 +74,7 @@ class StudentController extends Controller
         $student->careers()->attach($career->id);
         
         $binnacle = Binnacle::create([
+            'type' => 2,
             'action' => 'Registro Exitoso!',
             'identity' => $request->identity,
             'user_id' => \Auth::user()->id,
@@ -114,7 +115,29 @@ class StudentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'identity'      =>  'required',
+            'first_name'    =>  'required',
+            'last_name'     =>  'required',
+            'gender'        =>  'required',
+            'email'         =>  'required',
+            'phone'         =>  'nullable',
+            'photoAvatar'   =>  'required',
+            'canvas'        =>  'required'
+        ])->validate();
+
+        $student = Student::findOrFail($id);
+
+        $student->update($request->all());
+
+        $binnacle = Binnacle::create([
+            'type' => 3,
+            'action' => 'Actualización de Datos Exitosa!',
+            'identity' => $request->identity,
+            'user_id' => \Auth::user()->id,
+        ]);
+
+        return response()->json('success',201);
     }
 
     /**
@@ -125,7 +148,20 @@ class StudentController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $student = Student::findOrFail($id);
+
+        $identity = $student->identity;
+
+        $student->delete();
+
+        $binnacle = Binnacle::create([
+            'type' => 4,
+            'action' => 'Eliminado Exitoso!',
+            'identity' => $identity,
+            'user_id' => \Auth::user()->id,
+        ]);
+
+        return back($status = 302);
     }
 
     // METODO PARA BUSCAR LA FOTO DE ESTUDIANTE
@@ -136,5 +172,17 @@ class StudentController extends Controller
     }
     // METODO PARA BUSCAR LA FOTO DE ESTUDIANTE
 
+    // METODO PARA BUSCAR EL ESTUDIANTE
+    public function searchStudentInfo(Request $request,$id)
+    {
+        $student = Student::findOrFail($id);
+        if($request->ajax()){
+            return response()->json($student,200);
+        }else{
+            $careers = Career::all();
+            return view('students.edit',compact('student','careers'));
+        }
+    }
+    // METODO PARA BUSCAR EL ESTUDIANTE
     
 }

@@ -7,11 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 class Binnacle extends Model
 {
     protected $fillable = [
-		'user_id','action','identity'
+		'user_id','action','identity','type'
     ];
 
     public function user()
     {
-    	return $this->belongsTo(App\User::class);
+    	return $this->belongsTo(\App\User::class);
     }
 }
