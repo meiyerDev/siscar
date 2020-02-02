@@ -116,7 +116,7 @@
 				// ESCRIBIENDO FECHA DE VENCIMIENTO
 				let d = new Date()
 				ctx.font = "bold 7px sans-serif";
-				ctx.fillText(`VENCE: ${d.getDate()}-${d.getMonth()+1}-${d.getFullYear()+2}`,85,200);
+				ctx.fillText(`VENCE: ${d.getDate()}-${d.getMonth()+1}-${d.getFullYear()+2} - EMISIÓN: ${d.getDate()}-${d.getMonth()+1}-${d.getFullYear()}`,85,200);
 				ctx.fillText("FIRMA RECTOR",241,120);
 				ctx.fillText("JOSÉ L.",255,185);
 				ctx.fillText("BERROTERÁN",242,192);
@@ -151,7 +151,7 @@
 			$('#formSubmit').click(function() {
 				// e.preventDefault();
 				let form = $('form[name=registroEstudiante]');
-				if (imgForm != '' || imgFormBlob != '') {
+				if ((imgForm != '' || imgFormBlob != '') && title != '') {
 					
 					// dibujar canvas
 					draw(imgForm,title);
@@ -174,10 +174,14 @@
 						contentType: false,   // tell jQuery not to set contentType
 						cache: false,
 						success: function(resp) {
-							console.log(resp)
+							// console.log(resp)
 							Swal.fire({
 								title: "¡Felicidades!",
 								text: "El Estudiante ha sido Registrado Correctamente",
+								imageUrl: resp,
+		                        imageWidth: 300,
+		                        imageHeight: 190,
+		                        imageAlt: 'Custom image',
 							});
 						},
 						error:function(err) {

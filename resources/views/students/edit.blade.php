@@ -1,6 +1,6 @@
 @extends('layouts.templatito')
 
-@section('title') NUEVO @endsection
+@section('title') MODIFICAR | {{ $student->identity }} @endsection
 
 @section('body')
 			<div class="col-md-12">
@@ -116,7 +116,7 @@
 				// ESCRIBIENDO FECHA DE VENCIMIENTO
 				let d = new Date()
 				ctx.font = "bold 7px sans-serif";
-				ctx.fillText(`VENCE: ${d.getDate()}-${d.getMonth()+1}-${d.getFullYear()+2}`,85,200);
+				ctx.fillText(`VENCE: ${d.getDate()}-${d.getMonth()+1}-${d.getFullYear()+2} - EMISIÓN: ${d.getDate()}-${d.getMonth()+1}-${d.getFullYear()}`,85,200);
 				ctx.fillText("FIRMA RECTOR",241,120);
 				ctx.fillText("JOSÉ L.",255,185);
 				ctx.fillText("BERROTERÁN",242,192);
@@ -169,9 +169,8 @@
 					
 					// console.log(imgForm)
 					let formulario =  new FormData(form.get(0));
-					formulario.append('photoAvatar',imgForm);
-					formulario.append('photoAvatarBlob',imgFormBlob);
-					formulario.append('canvas',imagenCanvas);
+					formulario.append('photo',imgForm);
+					formulario.append('photo_license_2',imagenCanvas);
 
 					$.ajax({
 						url: form.attr('action'),
@@ -184,7 +183,11 @@
 							console.log(resp)
 							Swal.fire({
 								title: "¡Felicidades!",
-								text: "El Estudiante ha sido Registrado Correctamente",
+								text: "El Estudiante ha sido Modificado Correctamente",
+		                        imageUrl: resp,
+		                        imageWidth: 300,
+		                        imageHeight: 190,
+		                        imageAlt: 'Carnet',
 							});
 						},
 						error:function(err) {

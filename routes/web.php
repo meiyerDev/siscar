@@ -28,10 +28,16 @@ Route::get('estudiante/mostrar/{id}', 'StudentController@edit');
 Route::get('estudiante/foto/{id}', 'StudentController@searchPhoto')->name('estudiante.searchPhoto');
 Route::get('estudiante/editar/{id}', 'StudentController@searchStudentInfo')->name('estudiante.searchInfo');
 Route::resource('estudiante', 'StudentController');
+Route::get('prueba','StudentController@prueba');
 // Estudiante
 
 // Usuarios
 Route::get('admin/bitacora','BitacoraController@index')->name('usuario.bitacora');
+Route::get('admin/estadisticas','UserController@statisticsAll')->name('usuario.statistics');
+	//reportes 
+Route::get('admin/reportes', 'ReportController@index')->name('report.index');
+Route::post('admin/reportes/download', 'ReportController@download')->name('report.download');
+	//reportes 
 Route::get('admin/usuarios','UserController@index')->name('usuario.all');
 Route::post('admin/usuarios/nuevo','UserController@store')->name('usuario.new');
 Route::get('admin/usuarios/editar/{id}','UserController@edit')->name('usuario.edit');

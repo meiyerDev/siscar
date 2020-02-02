@@ -34,7 +34,7 @@
 												<td>{{ $student->identity }}</td>
 												<td>{{ $student->first_name }}</td>
 												<td>{{ $student->last_name }}</td>
-												<td>{{ $student->careers->first()->name }}</td>
+												<td>{{ $student->careers->last()->name }}</td>
 												<td>
 													<button type="button" class="btn btn-sm btn-primary btn-modal-info" data-info="{{ $student->id }}" title="Mostrar Información"><i class="fa fa-eye"></i></button>
 													

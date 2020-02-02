@@ -70,12 +70,14 @@
           $('#boton').attr('disabled', true);
         },
         success:(data)=>{
+          console.log(data);
           Swal.fire({
             title: "Felicidades!",
             text: "TU CARNET HA SIDO ENVIADO CON ÉXITO A TU CORREO REGISTRADO!",
           });
         },
         error:(err)=>{
+          console.log(err);
           Swal.fire({
             type: 'error',
             title: 'Oops..',

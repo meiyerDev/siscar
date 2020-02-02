@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\{User};
+use App\{User,Career};
 
 class UserController extends Controller
 {
@@ -53,5 +53,12 @@ class UserController extends Controller
     	$user->delete();
 
     	return back();
+    }
+
+    public function statisticsAll()
+    {
+        $careers = Career::all();
+
+        return view('admin.statistics',compact('careers'));
     }
 }

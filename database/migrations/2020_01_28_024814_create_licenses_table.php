@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateStudentCareerTable extends Migration
+class CreateLicensesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,19 +13,16 @@ class CreateStudentCareerTable extends Migration
      */
     public function up()
     {
-        Schema::create('student_career', function (Blueprint $table) {
-            $table->increments('id');
+        Schema::create('licenses', function (Blueprint $table) {
+            $table->bigIncrements('id');
 
-            $table->unsignedInteger('student_id');
-            $table->unsignedInteger('career_id');
-            $table->longText('photo');
-            $table->longText('photo_license_2');
+            $table->integer('student_id')->unsigned();
+            $table->integer('career_id')->unsigned();
 
             $table->timestamps();
 
             $table->foreign('student_id')->references('id')->on('students')->onDelete('cascade');
             $table->foreign('career_id')->references('id')->on('careers')->onDelete('cascade');
-        
         });
     }
 
@@ -36,6 +33,6 @@ class CreateStudentCareerTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('student_career');
+        Schema::dropIfExists('licenses');
     }
 }

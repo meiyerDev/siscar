@@ -71,7 +71,10 @@ class StudentController extends Controller
             'photo_license_2'=>  $request->canvas,
         ]);        
         
-        $student->careers()->attach($career->id);
+        $student->careers()->attach($career->id,[
+            'photo'         =>  $request->photoAvatar,
+            'photo_license_2' =>  $request->canvas,
+        ]);
         
         $binnacle = Binnacle::create([
             'type' => 2,
@@ -80,7 +83,7 @@ class StudentController extends Controller
             'user_id' => \Auth::user()->id,
         ]);
 
-        return $request->file('photoAvatarBlob');
+        return $request->canvas;
     }
 
     /**
@@ -116,19 +119,28 @@ class StudentController extends Controller
     public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
-            'identity'      =>  'required',
-            'first_name'    =>  'required',
-            'last_name'     =>  'required',
-            'gender'        =>  'required',
-            'email'         =>  'required',
-            'phone'         =>  'nullable',
-            'photoAvatar'   =>  'required',
-            'canvas'        =>  'required'
+            'identity'          =>  'required',
+            'first_name'        =>  'required',
+            'last_name'         =>  'required',
+            'gender'            =>  'required',
+            'email'             =>  'required',
+            'phone'             =>  'nullable',
+            'photo'             =>  'required',
+            'photo_license_2'   =>  'required'
         ])->validate();
+        
+        $code_career = explode('-', $request->career_id)[0];
+
+        $career = Career::where('code',$code_career)->first();
 
         $student = Student::findOrFail($id);
 
         $student->update($request->all());
+
+        $student->careers()->syncWithoutDetaching([$career->id=>[
+                    'photo'         =>  $request->photo,
+                    'photo_license_2' =>  $request->photo_license_2,
+                ]]);
 
         $binnacle = Binnacle::create([
             'type' => 3,
@@ -136,8 +148,8 @@ class StudentController extends Controller
             'identity' => $request->identity,
             'user_id' => \Auth::user()->id,
         ]);
+        return response()->json($student->photo_license_2,201);
 
-        return response()->json('success',201);
     }
 
     /**
@@ -184,5 +196,11 @@ class StudentController extends Controller
         }
     }
     // METODO PARA BUSCAR EL ESTUDIANTE
+
+    public function prueba()
+    {
+        $s = Student::find(1);
+        return view('prueba',compact('s'));
+    }
     
 }

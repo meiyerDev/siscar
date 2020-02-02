@@ -7,6 +7,16 @@ use Illuminate\Database\Eloquent\Model;
 class Licenses extends Model
 {
     protected $fillable = [
-    	'student_career_id',
+    	'student_id','career_id'
     ];
+
+    public function student()
+    {
+    	return $this->belongsTo(Student::class);
+    }
+
+    public function career()
+    {
+    	return $this->belongsTo(Career::class);
+    }
 }

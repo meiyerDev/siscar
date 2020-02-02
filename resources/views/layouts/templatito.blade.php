@@ -42,18 +42,29 @@
 					<a class="nav-link active" href="{{ route('login') }}">{{ __('Login') }}</a>
 				</li>
                 @else
-				<li class="nav-item">
-					<a class="nav-link text-white" href="{{ route('estudiante.index') }}">Listado de Estudiantes</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link text-white" href="{{ route('estudiante.create') }}">Nuevo Estudiante</a>
+                <li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle text-white" href="#" id="navbarMenuEstudiante" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						Estudiante
+					</a>
+					<div class="dropdown-menu" aria-labelledby="navbarMenuEstudiante">
+						<a class="dropdown-item" href="{{ route('estudiante.create') }}">Nuevo</a>
+						<a class="dropdown-item" href="{{ route('estudiante.index') }}">Listado</a>
+					</div>
 				</li>
 				@if(\Auth::user()->is_admin())
-				<li class="nav-item">
-					<a class="nav-link text-white" href="{{ route('usuario.bitacora') }}">Bitácora</a>
+				<li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle text-white" href="#" id="navbarMenuUser" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						Admin
+					</a>
+					<div class="dropdown-menu" aria-labelledby="navbarMenuUser">
+					<a class="dropdown-item" href="{{ route('usuario.statistics') }}">Estadísticas</a>
+					<a class="dropdown-item" href="{{ route('usuario.bitacora') }}">Bitácora</a>
+
+					<a class="dropdown-item" href="{{ route('usuario.all') }}">Gestión de Usuarios</a>
+					</div>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link text-white" href="{{ route('usuario.all') }}">Gestión de Usuarios</a>
+					<a class="nav-link active" href="{{ route('report.index') }}">Reportes</a>
 				</li>
 				@endif
 			</ul>

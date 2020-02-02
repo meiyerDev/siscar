@@ -10,4 +10,16 @@ class Career extends Model
 		'code',
 		'name',
     ];
+
+    public function students()
+    {
+    	return $this->belongsToMany(Student::class,'student_career')
+            ->withPivot('photo', 'photo_license_2')
+            ->withTimestamps();
+    }
+
+    public function licenses()
+    {
+        return $this->hasMany(Licenses::class);
+    }
 }

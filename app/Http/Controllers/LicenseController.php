@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use App\Models\{Student,Career,License};
-use App\Binnacle;
+use App\Models\{Student,Career};
+use App\{Binnacle,Licenses};
 use App\Mail\LicenseCallReceived;
 use QrCode;
 
@@ -25,13 +25,19 @@ class LicenseController extends Controller
 
         $receiver = $student->email;
 
-        // return $receiver;
+        // return $student;
 
         \Mail::to($receiver)->send(new LicenseCallReceived($request->student,$pdf));
         
         $binnacle = Binnacle::create([
+            'type' => 2,
             'action' => 'Solicitud de Carnet',
             'identity' => $request->identity,
+        ]);
+
+        licenses::create([
+            'student_id' => $student->id,
+            'career_id' => $student->careers->last()->id
         ]);
 
         return response('¡Enviado!', $status = 200);        
